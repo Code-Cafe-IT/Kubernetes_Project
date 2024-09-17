@@ -51,7 +51,7 @@ pipeline {
                 }
             }
         }
-        stage('Sending manifest to K8s Server'){
+        stage('Update K8s'){
             steps{
                 script{
                     sshagent(['k8s']) {
