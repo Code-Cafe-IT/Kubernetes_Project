@@ -56,7 +56,7 @@ pipeline {
                 script{
                     sshagent(['ansible']) {
                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@10.0.11.90' // K8s-Server
-                        sh 'scp -r /var/lib/jenkins/workspace/pipeline-demo/* ubuntu@10.0.11.90:/home/ubuntu' //Path of jenkins server
+                        sh 'scp -r /var/lib/jenkins/workspace/pipeline-demo/* ubuntu@10.0.11.90:/home/ubuntu/' //Path of jenkins server
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.11.90 sed -i 's/$JOB_NAME.*/$JOB_NAME:v1.$BUILD_ID/g' Deployment.yml"
                     }
                 }
@@ -67,6 +67,7 @@ pipeline {
                 script{
                     sshagent(['k8s']) {
                         sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 cd /home/ec2-user/' // Ansible-Server
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 ansible all -m ping' // Ansible-Server
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 ansible-playbook ansible.yml"
                     }
                 }

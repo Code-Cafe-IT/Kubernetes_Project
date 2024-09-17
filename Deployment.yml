@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mrdevops
-        image: minhduccloud/pipeline-demo
+        image: minhduccloud/pipeline-demo:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
