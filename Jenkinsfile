@@ -22,7 +22,7 @@ pipeline {
                 }
             }
         }
-        stages('Docker Build Image'){
+        stage('Docker Build Image'){
             steps{
                 script{
                     sshagent(['ansible']) {
