@@ -1,5 +1,9 @@
 pipeline {
     agent any  // Chạy pipeline trên bất kỳ agent nào
+    environment{
+        DOCKER_USER = "minhduccloud"
+        DOCKER_PASS = 'dockerhub'
+    }
 
     stages {
         stage('Cleanup Workspace'){
@@ -38,7 +42,7 @@ pipeline {
                 script{
                     sshagent(['ansible']) {
                         withCredentials([gitUsernamePassword(credentialsId: 'dockerhub', gitToolName: 'Default')]) {
-                            sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker login -u minhduccloud -p $dockerhub '
+                            sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} '
                             sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker push minhduccloud/pipeline-demo:v1.$BUILD_ID '
                             sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker push minhduccloud/pipeline-demo:latest '
                         }
