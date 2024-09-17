@@ -51,5 +51,16 @@ pipeline {
                 }
             }
         }
+        stage('Sending manifest to K8s Server'){
+            steps{
+                script{
+                    sshagent(['k8s']) {
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 cd /home/ec2-user/' // Ansible-Server
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 sed -i 's/$JOB_NAME.*/$JOB_NAME:v1.$BUILD_ID/g' Deployment.yml"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 ansible-playbook ansible.yml"
+                    }
+                }
+            }
+        }
     }
 }
