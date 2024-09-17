@@ -17,7 +17,7 @@ pipeline {
                 script{
                     sshagent(['ansible']) {
                         sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229' // Ansible-Server
-                        sh 'scp /var/lib/jenkins/workspace/pipeline-demo/* ec2-user@10.0.23.229:home/ec2-user' //Path of jenkins server
+                        sh 'scp /var/lib/jenkins/workspace/pipeline-demo/* ec2-user@10.0.23.229:/home/ec2-user' //Path of jenkins server
                     }
                 }
             }
