@@ -41,7 +41,7 @@ pipeline {
                 script{
                     sshagent(['ansible']) {
                         withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                            sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 echo ${dockerhub} | docker login -u ${DOCKER_USER} --password-stdin '
+                            sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker login -u ${DOCKER_USER} -p ${dockerhub} '
                             sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker push minhduccloud/pipeline-demo:v1.$BUILD_ID '
                             sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker push minhduccloud/pipeline-demo:latest '
                         }
