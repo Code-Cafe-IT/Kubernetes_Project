@@ -15,4 +15,4 @@ WORKDIR /var/www/html/
 EXPOSE 80
 
 # Khởi động Apache
-CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+CMD ["apache2ctl", "-D", "FOREGROUND"]
