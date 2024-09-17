@@ -33,5 +33,18 @@ pipeline {
                 }
             }
         }
+        stage('Push to DockerHub'){
+            steps{
+                script{
+                    sshagent(['ansible']) {
+                        withCredentials([gitUsernamePassword(credentialsId: 'dockerhub', gitToolName: 'Default')]) {
+                            sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker login -u minhduccloud -p $dockerhub '
+                            sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker push minhduccloud/pipeline-demo:v1.$BUILD_ID '
+                            sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker push minhduccloud/pipeline-demo:latest '
+                        }
+                    }
+                }
+            }
+        }
     }
 }
