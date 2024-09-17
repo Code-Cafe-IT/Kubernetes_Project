@@ -1,7 +1,9 @@
-FROM centos:7
+# Sử dụng Ubuntu làm image nền
+FROM ubuntu:latest
 
-# Cập nhật hệ thống và cài đặt httpd
-RUN yum clean all && yum -y update && yum -y install httpd
+# Cập nhật hệ thống và cài đặt Apache HTTP Server
+RUN apt-get update && \
+    apt-get install -y apache2
 
 # Copy thư mục photogenic vào /var/www/html/
 COPY photogenic/ /var/www/html/
