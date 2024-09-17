@@ -51,7 +51,7 @@ pipeline {
                 }
             }
         }
-        stage('Sending docker file to Ansible Server'){
+        stage('Sending manifest to K8s Server'){
             steps{
                 script{
                     sshagent(['ansible']) {
