@@ -22,5 +22,15 @@ pipeline {
                 }
             }
         }
+        stages('Docker Build Image'){
+            steps{
+                script{
+                    sshagent(['ansible']) {
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 cd /home/ec2-user/'
+                        sh 'ssh -o StrictHostKeyChecking=no ec2-user@10.0.23.229 docker image build -t $JOB_NAME:v1.$BUILD_ID .'
+                    }
+                }
+            }
+        }
     }
 }
